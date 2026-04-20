@@ -47,6 +47,7 @@
       --primary: #0050b3;
     }
 
+    /* LOGO */
     .navbar {
       position: fixed;
       top: 10px;
@@ -55,22 +56,22 @@
     }
 
     .navbar img {
-      height: 140px;
+      height: 120px;
       transition: 0.3s;
     }
 
     .navbar img:hover {
-      transform: scale(1.1);
+      transform: scale(1.05);
     }
 
+    /* HEADER */
     header {
       text-align: center;
       padding: 160px 20px 80px;
     }
 
     header h1 {
-      font-size: 3.2rem;
-      color: white;
+      font-size: 3rem;
       font-weight: 700;
     }
 
@@ -80,7 +81,6 @@
     }
 
     h2 {
-      color: white;
       font-weight: 700;
       margin-bottom: 20px;
     }
@@ -88,11 +88,11 @@
     .about {
       max-width: 800px;
       margin: auto;
-      font-size: 1.1rem;
-      line-height: 1.6;
       color: #ccc;
+      line-height: 1.6;
     }
 
+    /* BOTONES */
     .cta-btn {
       margin-top: 30px;
       padding: 15px 30px;
@@ -117,15 +117,14 @@
       border-radius: 25px;
       cursor: pointer;
       color: white;
-      font-weight: 500;
       transition: 0.3s;
     }
 
     .linkedin-btn:hover {
       transform: scale(1.05);
-      opacity: 0.9;
     }
 
+    /* SERVICIOS */
     .services {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -152,35 +151,34 @@
       margin-bottom: 10px;
     }
 
-    .contact-info {
-      margin-top: 15px;
-      color: #aaa;
-    }
-
-    .contact-info a {
-      color: var(--primary);
-      text-decoration: none;
-    }
-
     footer {
       text-align: center;
       padding: 30px;
       color: #777;
-     }
+    }
 
+    /* BOTONES FLOTANTES */
+
+    /* Instagram (izquierda) */
     .instagram {
       position: fixed;
-      bottom: 100px;
-      right: 100px;
-      background: #25D366;
+      bottom: 20px;
+      left: 20px;
+      background: #E1306C;
       padding: 12px;
       border-radius: 50%;
+      transition: 0.3s;
     }
 
     .instagram img {
       width: 28px;
     }
 
+    .instagram:hover {
+      transform: scale(1.1);
+    }
+
+    /* WhatsApp (derecha) */
     .whatsapp {
       position: fixed;
       bottom: 20px;
@@ -188,10 +186,15 @@
       background: #25D366;
       padding: 12px;
       border-radius: 50%;
+      transition: 0.3s;
     }
 
     .whatsapp img {
       width: 28px;
+    }
+
+    .whatsapp:hover {
+      transform: scale(1.1);
     }
 
   </style>
@@ -217,15 +220,13 @@
     Además, ofrecemos provisión de insumos tecnológicos adaptados a cada necesidad.
     
     ¿Buscás soporte IT, liderazgo de equipos, adquisición de equipamiento o gestión integral de proyectos?
-    En Tech Solution te acompañamos con soluciones confiables, eficientes y alineadas a tus objetivos.
+    En Tech Solution te acompañamos con soluciones confiables y eficientes.
   </p>
 
-   <!-- BOTÓN EMAIL -->
   <button class="cta-btn"
-    onclick="window.location.href='mailto:info@techsolution.net.ar?subject=Consulta%20Tech%20Solution&body=Hola%20Raul,%20quisiera%20consultarte%20por%20servicios%20IT.'">
+    onclick="window.location.href='mailto:info@techsolution.net.ar?subject=Solicitud%20de%20información&body=Hola%20Raul,%0A%0AMe%20gustaría%20recibir%20más%20información%20sobre%20sus%20servicios.%0A%0AGracias.'">
     Contactanos
   </button>
-</section>
 </section>
 
 <section>
@@ -233,10 +234,7 @@
 
   <p class="about">
     Soy Raul Conte, profesional con más de 20 años de experiencia liderando operaciones IT en empresas multinacionales de primer nivel.
-    
-    Me especializo en gestión de infraestructura, operaciones tecnológicas y administración de activos IT, combinando visión estratégica con ejecución eficiente.
-    
-    A lo largo de mi carrera he liderado equipos, optimizado procesos y acompañado a organizaciones en su crecimiento tecnológico.
+    Especialista en infraestructura, operaciones tecnológicas y gestión de activos IT.
   </p>
 
   <button class="linkedin-btn" onclick="window.open('https://www.linkedin.com/in/rconte', '_blank')">
@@ -249,42 +247,40 @@
 
   <div class="services">
     <div class="card">
-      <h3>Soporte de Infraestructura en IT</h3>
-      <p>Auditoría de tu infraestructura, Administración, gestión remota de tickets, Resolución rápida y eficiente.</p>
+      <h3>Soporte de Infraestructura IT</h3>
+      <p>Auditoría, administración y resolución eficiente de incidentes.</p>
     </div>
 
     <div class="card">
       <h3>Consultoría</h3>
-      <p>Manejo de equipos, optimización de procesos, y mejora operativa.</p>
+      <p>Optimización de procesos, liderazgo de equipos y mejora operativa.</p>
     </div>
 
     <div class="card">
-      <h3> Capacitación constante</h3>
-      <p>Webinars y sesión de entrenamiento a usuarios, mentoría a tus analistas de TI para aprender a transmitir conocimiento de una manera didactica.</p>
+      <h3>Capacitación</h3>
+      <p>Entrenamiento a usuarios y mentoría a equipos IT.</p>
     </div>
 
     <div class="card">
-      <h3>Venta de software y hardware</h3>
-      <p>Manejo de licencias, venta de equipamientos, insumos confiables para tu negocio, como funciona esto, me solicitas cotización por whatsapp o por email, te paso un precio el mismo día, acordamos avanzar y te lo entrego en tu oficina para darte la máxima prioridad.</p>
+      <h3>Venta de Tecnología</h3>
+      <p>Equipos, licencias y soluciones adaptadas a tu negocio.</p>
     </div>
   </div>
 </section>
 
-<section>
-
-</section>
-
 <footer>
   © 2026 Tech Solution - Todos los derechos reservados.
-  
 </footer>
 
+<!-- Instagram -->
+<a class="instagram" href="https://www.instagram.com/techsolution.oficial/" target="_blank">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
+</a>
+
+<!-- WhatsApp -->
 <a class="whatsapp" href="https://wa.me/5491176370180" target="_blank">
   <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
 </a>
 
-<a class="instagram" href="https://www.instagram.com/techsolution.oficial/" target="_blank">
-<img src="https://es.wikipedia.org/wiki/Archivo:Instagram_logo.svg#/media/Archivo:Instagram_logo_2016.svg">
-</a>
 </body>
 </html>
