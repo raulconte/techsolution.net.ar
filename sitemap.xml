@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Aquí va la URL de tu página principal -->
+  <url>
+    <loc>https://www.techsolution.net.ar/</loc> 
+    <lastmod>2026-04-20</lastmod> <!-- Cambia esto por la fecha en que lo subiste o actualizaste -->
+    <changefreq>monthly</changefreq> <!-- Indica qué tan seguido crees que cambia -->
+    <priority>1.0</priority> <!-- Indica a Google cuán importante es esta página (el 1.0 es el más importante) -->
+  </url>
+</urlset>
