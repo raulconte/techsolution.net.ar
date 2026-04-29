@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  
+<meta charset="UTF-8">
   <title>Tech Solution - Consultoría IT en Argentina</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -22,277 +23,915 @@
   <!-- Sitemap -->
   <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
 
-  <!-- Fuente -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
+<meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TECH SOLUTION | Tecnología & Consultoría IT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
+    :root {
+      --bg: #020510;
+      --bg2: #040c1e;
+      --accent: #00e5ff;
+      --accent2: #7b5cfa;
+      --accent3: #ff3c6e;
+      --text: #e8eaf6;
+      --muted: #6b7db3;
+      --card: rgba(10, 20, 50, 0.7);
+      --border: rgba(0, 229, 255, 0.12);
+      --glow: 0 0 40px rgba(0, 229, 255, 0.18);
     }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
 
     body {
-      color: #fff;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
       overflow-x: hidden;
+      cursor: none;
     }
 
-    /* FONDO */
-    body::before {
-      content: "";
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      background: url("background.jpg") no-repeat center/cover;
-      filter: blur(8px) brightness(0.35);
-      transform: scale(1.1);
-      z-index: -2;
+    /* ── CURSOR ── */
+    #cursor {
+      position: fixed; width: 12px; height: 12px;
+      background: var(--accent); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: width .15s, height .15s, background .15s;
+      mix-blend-mode: screen;
+    }
+    #cursor-ring {
+      position: fixed; width: 36px; height: 36px;
+      border: 1.5px solid var(--accent); border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%,-50%);
+      transition: width .3s, height .3s, transform .08s ease-out, opacity .3s;
+      opacity: .5;
+    }
+    body:has(a:hover) #cursor, body:has(button:hover) #cursor { width: 6px; height: 6px; }
+    body:has(a:hover) #cursor-ring, body:has(button:hover) #cursor-ring { width: 56px; height: 56px; opacity: .8; }
+
+    /* ── ANIMATED BACKGROUND ── */
+    #bg-canvas {
+      position: fixed; inset: 0;
+      z-index: 0; pointer-events: none;
     }
 
-    body::after {
-      content: "";
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.7);
-      z-index: -1;
+    .noise {
+      position: fixed; inset: 0; z-index: 1;
+      pointer-events: none; opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
     }
 
-    :root {
-      --primary: #003a8c;
+    /* ── LAYOUT ── */
+    .wrap { max-width: 1160px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 2; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 20px 0;
+      backdrop-filter: blur(18px);
+      background: rgba(2,5,16,.6);
+      border-bottom: 1px solid var(--border);
+      transition: padding .3s;
+    }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.5rem;
+      letter-spacing: -0.03em;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent3); -webkit-text-fill-color: var(--accent3); }
+
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--muted);
+      font-size: .9rem; letter-spacing: .04em; text-transform: uppercase;
+      transition: color .2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; right: 100%;
+      height: 1px; background: var(--accent);
+      transition: right .3s cubic-bezier(.25,.46,.45,.94);
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover::after { right: 0; }
+
+    .nav-cta {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent); padding: 9px 22px;
+      border-radius: 4px; font-family: 'DM Sans', sans-serif;
+      font-size: .85rem; letter-spacing: .08em; text-transform: uppercase;
+      cursor: pointer; transition: background .2s, color .2s, box-shadow .2s;
+      text-decoration: none;
+    }
+    .nav-cta:hover {
+      background: var(--accent); color: var(--bg);
+      box-shadow: 0 0 24px rgba(0,229,255,.4);
     }
 
-    /* LOGO */
-    .navbar {
-      position: fixed;
-      top: 10px;
-      right: 20px;
-      z-index: 1000;
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 120px 0 80px;
+    }
+    .hero-inner { max-width: 760px; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid var(--border);
+      background: rgba(0,229,255,.06);
+      padding: 6px 16px; border-radius: 100px;
+      font-size: .78rem; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 32px;
+      animation: fadeUp .8s ease both;
+    }
+    .badge-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
     }
 
-    .navbar img {
-      height: 120px;
-      transition: 0.3s;
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(0,229,255,.6); }
+      50% { box-shadow: 0 0 0 8px rgba(0,229,255,0); }
     }
 
-    .navbar img:hover {
-      transform: scale(1.05);
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: clamp(2.8rem, 6vw, 5.5rem);
+      line-height: 1.0; letter-spacing: -0.03em;
+      margin-bottom: 28px;
+      animation: fadeUp .8s .1s ease both;
+    }
+    h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 60%, var(--accent3) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
 
-    /* HEADER */
-    header {
-      text-align: center;
-      padding: 160px 20px 80px;
+    .hero-sub {
+      font-size: 1.1rem; color: var(--muted); max-width: 560px;
+      line-height: 1.75; margin-bottom: 44px;
+      animation: fadeUp .8s .2s ease both;
     }
 
-    header h1 {
-      font-size: 3rem;
-      font-weight: 700;
+    .hero-actions {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      animation: fadeUp .8s .3s ease both;
     }
 
-    section {
-      padding: 60px 20px;
-      text-align: center;
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: var(--bg); border: none;
+      padding: 14px 32px; border-radius: 6px;
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: .95rem; letter-spacing: .04em;
+      cursor: pointer; transition: transform .2s, box-shadow .2s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,229,255,.35);
+    }
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      border: 1px solid rgba(255,255,255,.15);
+      padding: 14px 32px; border-radius: 6px;
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+      font-size: .95rem; cursor: pointer;
+      transition: border-color .2s, color .2s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Stats strip */
+    .hero-stats {
+      display: flex; gap: 48px; margin-top: 72px;
+      padding-top: 48px;
+      border-top: 1px solid var(--border);
+      animation: fadeUp .8s .4s ease both;
+      flex-wrap: wrap;
+    }
+    .stat-num {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: 2.4rem; letter-spacing: -0.04em;
+      background: linear-gradient(135deg, #fff, var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-label { color: var(--muted); font-size: .82rem; letter-spacing: .06em; text-transform: uppercase; margin-top: 2px; }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      padding: 20px 0; overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: rgba(0,229,255,.03);
+      position: relative; z-index: 2;
+    }
+    .marquee-track {
+      display: flex; gap: 56px; width: max-content;
+      animation: marquee 24s linear infinite;
+    }
+    .marquee-track span {
+      font-family: 'Syne', sans-serif; font-size: .8rem;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: var(--muted); white-space: nowrap;
+    }
+    .marquee-track span em { color: var(--accent); font-style: normal; margin: 0 24px; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 0; position: relative; z-index: 2; }
+
+    .section-eyebrow {
+      font-size: .78rem; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 16px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-eyebrow::before {
+      content: ''; width: 32px; height: 1px; background: var(--accent);
     }
 
     h2 {
-      font-weight: 700;
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.1; letter-spacing: -0.02em;
       margin-bottom: 20px;
     }
-
-    .about {
-      max-width: 800px;
-      margin: auto;
-      color: #ccc;
-      line-height: 1.6;
+    h2 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
+    .section-sub { color: var(--muted); font-size: 1.05rem; line-height: 1.7; max-width: 560px; }
 
-    /* BOTONES */
-    .cta-btn {
-      margin-top: 30px;
-      padding: 15px 30px;
-      background: var(--primary);
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      font-weight: bold;
-      color: white;
-      transition: 0.3s;
-    }
-
-    .cta-btn:hover {
-      transform: scale(1.05);
-    }
-
-    .linkedin-btn {
-      margin-top: 20px;
-      padding: 12px 25px;
-      background: #0A66C2;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      color: white;
-      transition: 0.3s;
-    }
-
-    .linkedin-btn:hover {
-      transform: scale(1.05);
-    }
-
-    /* SERVICIOS */
-    .services {
+    /* ── SERVICES GRID ── */
+    .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin-top: 40px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 64px;
+    }
+    .service-card {
+      background: var(--card);
+      padding: 40px 36px;
+      position: relative;
+      overflow: hidden;
+      transition: background .3s;
+      backdrop-filter: blur(8px);
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(0,229,255,.06), transparent 60%);
+      opacity: 0; transition: opacity .3s;
+    }
+    .service-card:hover::before { opacity: 1; }
+    .service-card:hover { background: rgba(10,26,66,.9); }
+
+    .service-icon {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      background: rgba(0,229,255,.1);
+      border: 1px solid rgba(0,229,255,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 24px;
+      transition: transform .3s, box-shadow .3s;
+    }
+    .service-card:hover .service-icon {
+      transform: scale(1.1);
+      box-shadow: 0 0 24px rgba(0,229,255,.3);
     }
 
-    .card {
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(5px);
-      padding: 25px;
-      border-radius: 15px;
-      transition: 0.3s;
-      border: 1px solid rgba(255,255,255,0.05);
+    .service-card h3 {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: 1.15rem; margin-bottom: 12px;
+    }
+    .service-card p { color: var(--muted); font-size: .92rem; line-height: 1.7; }
+
+    .service-arrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--accent); font-size: .82rem;
+      letter-spacing: .06em; text-transform: uppercase;
+      margin-top: 20px; text-decoration: none;
+      opacity: 0; transform: translateX(-8px);
+      transition: opacity .3s, transform .3s;
+    }
+    .service-card:hover .service-arrow { opacity: 1; transform: translateX(0); }
+
+    /* ── PRODUCTS ── */
+    .products-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; flex-wrap: wrap; gap: 24px; }
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+
+    .product-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden;
+      transition: transform .3s, border-color .3s, box-shadow .3s;
+      cursor: pointer;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0,229,255,.3);
+      box-shadow: var(--glow);
+    }
+    .product-img {
+      height: 180px;
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+    }
+    .product-img-bg {
+      position: absolute; inset: 0;
+      background: var(--grad);
+      opacity: .15;
+    }
+    .product-img-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,255,.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,.1) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .product-body { padding: 20px 22px; }
+    .product-category { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--accent2); margin-bottom: 6px; }
+    .product-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 8px; }
+    .product-desc { font-size: .85rem; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; }
+    .product-price { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; color: var(--accent); }
+    .product-price span { font-family: 'DM Sans'; font-weight: 300; font-size: .75rem; color: var(--muted); }
+    .btn-buy {
+      background: rgba(0,229,255,.12); border: 1px solid rgba(0,229,255,.3);
+      color: var(--accent); padding: 8px 18px; border-radius: 6px;
+      font-size: .82rem; font-family: 'DM Sans'; cursor: pointer;
+      transition: background .2s, box-shadow .2s;
+      text-decoration: none;
+    }
+    .btn-buy:hover { background: rgba(0,229,255,.22); box-shadow: 0 0 18px rgba(0,229,255,.2); }
+
+    /* ── WHY US ── */
+    .why-section { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    @media (max-width: 800px) { .why-section { grid-template-columns: 1fr; } }
+
+    .why-visual {
+      position: relative; aspect-ratio: 1;
+      max-width: 420px;
+    }
+    .why-ring {
+      position: absolute; border-radius: 50%; border-style: solid;
+      animation: spin linear infinite;
+      top: 50%; left: 50%; transform-origin: 0 0;
+    }
+    .ring1 { width: 100%; height: 100%; margin: -50% 0 0 -50%; border-width: 1px; border-color: rgba(0,229,255,.15) rgba(0,229,255,.05) rgba(0,229,255,.15) rgba(0,229,255,.05); animation-duration: 20s; }
+    .ring2 { width: 76%; height: 76%; margin: -38% 0 0 -38%; border-width: 1px; border-color: rgba(123,92,250,.2) transparent rgba(123,92,250,.2) transparent; animation-duration: 14s; animation-direction: reverse; }
+    .ring3 { width: 52%; height: 52%; margin: -26% 0 0 -26%; border-width: 1px; border-color: rgba(255,60,110,.2) rgba(255,60,110,.05) rgba(255,60,110,.2) rgba(255,60,110,.05); animation-duration: 9s; }
+    .why-center {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 120px; height: 120px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,229,255,.2), rgba(0,229,255,.04));
+      border: 1px solid rgba(0,229,255,.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.6rem;
+      box-shadow: 0 0 60px rgba(0,229,255,.15);
+    }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    /* Orbit dots */
+    .orbit-dot {
+      position: absolute; width: 10px; height: 10px;
+      border-radius: 50%; background: var(--accent);
+      top: 50%; left: 50%;
+      margin: -5px 0 0 -5px;
+      box-shadow: 0 0 12px var(--accent);
     }
 
-    .card:hover {
-      transform: translateY(-10px);
-      border-color: var(--primary);
+    .why-features { display: flex; flex-direction: column; gap: 28px; margin-top: 48px; }
+    .why-feature {
+      display: flex; gap: 20px; align-items: flex-start;
+      padding: 20px 24px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(0,229,255,.03);
+      transition: border-color .3s, background .3s;
     }
+    .why-feature:hover { border-color: rgba(0,229,255,.25); background: rgba(0,229,255,.06); }
+    .feature-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+    .feature-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .95rem; margin-bottom: 4px; }
+    .feature-desc { font-size: .87rem; color: var(--muted); line-height: 1.65; }
 
-    .card h3 {
-      color: var(--primary);
-      margin-bottom: 10px;
+    /* ── TESTIMONIALS ── */
+    .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 56px; }
+    .testimonial {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 32px 28px;
+      position: relative; overflow: hidden;
+      transition: border-color .3s;
     }
+    .testimonial:hover { border-color: rgba(0,229,255,.25); }
+    .testimonial::before {
+      content: '\201C';
+      font-family: 'Syne', sans-serif;
+      font-size: 8rem; line-height: .6;
+      position: absolute; top: 12px; right: 20px;
+      color: rgba(0,229,255,.06);
+      pointer-events: none;
+    }
+    .t-text { font-size: .95rem; color: #b0bcd8; line-height: 1.75; margin-bottom: 24px; }
+    .t-author { display: flex; align-items: center; gap: 14px; }
+    .t-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent2), var(--accent3));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: .9rem; color: white;
+      flex-shrink: 0;
+    }
+    .t-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .9rem; }
+    .t-role { font-size: .8rem; color: var(--muted); margin-top: 2px; }
+    .stars { color: #ffc94d; font-size: .8rem; letter-spacing: 2px; margin-bottom: 16px; }
 
+    /* ── CTA SECTION ── */
+    .cta-section {
+      margin: 0 0 100px;
+      padding: 80px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(0,229,255,.07) 0%, rgba(123,92,250,.07) 100%);
+      border: 1px solid rgba(0,229,255,.15);
+      text-align: center; position: relative; overflow: hidden;
+      z-index: 2;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+      width: 500px; height: 300px;
+      background: radial-gradient(ellipse, rgba(0,229,255,.12), transparent 70%);
+      pointer-events: none;
+    }
+    .cta-section h2 { margin-bottom: 16px; }
+    .cta-section .section-sub { margin: 0 auto 40px; text-align: center; }
+    .cta-section .hero-actions { justify-content: center; }
+
+    /* ── FOOTER ── */
     footer {
-      text-align: center;
-      padding: 30px;
-      color: #777;
+      border-top: 1px solid var(--border);
+      padding: 56px 0 32px;
+      position: relative; z-index: 2;
+    }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    @media (max-width: 800px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 500px) { .footer-grid { grid-template-columns: 1fr; } }
+    .footer-brand p { color: var(--muted); font-size: .9rem; line-height: 1.7; margin-top: 16px; max-width: 280px; }
+    .footer-col h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 20px; color: var(--text); }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul a { text-decoration: none; color: var(--muted); font-size: .88rem; transition: color .2s; }
+    .footer-col ul a:hover { color: var(--accent); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 28px; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: .82rem; color: var(--muted); }
+    .social-links { display: flex; gap: 16px; }
+    .social-link {
+      width: 38px; height: 38px; border-radius: 8px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); font-size: .9rem; text-decoration: none;
+      transition: border-color .2s, color .2s, background .2s;
+    }
+    .social-link:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,229,255,.08); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* BOTONES FLOTANTES */
-
-    .instagram {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      background: #E1306C;
-      padding: 12px;
-      border-radius: 50%;
-      transition: 0.3s;
+    .reveal {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity .7s ease, transform .7s ease;
     }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    .instagram img {
-      width: 28px;
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(0,229,255,.3); border-radius: 10px; }
+
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .hero { padding: 100px 0 60px; }
+      .hero-stats { gap: 28px; }
+      .cta-section { padding: 48px 24px; }
     }
-
-    .instagram:hover {
-      transform: scale(1.1);
-    }
-
-    .whatsapp {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #25D366;
-      padding: 12px;
-      border-radius: 50%;
-      transition: 0.3s;
-    }
-
-    .whatsapp img {
-      width: 28px;
-    }
-
-    .whatsapp:hover {
-      transform: scale(1.1);
-    }
-
   </style>
 </head>
-
 <body>
 
-<nav class="navbar">
-  <img src="logo.png" alt="Tech Solution">
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<div class="noise"></div>
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="wrap">
+    <!-- NOMBRE ACTUALIZADO A TECH SOLUTION -->
+    <a href="#" class="logo">Tech Solution<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#productos">Productos</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#clientes">Clientes</a></li>
+    </ul>
+    <!-- BOTÓN DE CONTACTO ACTUALIZADO CON WHATSAPP -->
+    <a href="https://wa.me/5491176370180?text=Hola,%20quisiera%20más%20información" target="_blank" class="nav-cta">Contactar</a>
+  </div>
 </nav>
 
-<header>
-  <h1>BIENVENIDOS A TECH SOLUTION</h1>
-</header>
-
-<section>
-  <h2>Sobre Tech Solution</h2>
-
-  <p class="about">
-    Brindamos servicios profesionales en IT con sólida experiencia en entornos corporativos y multinacionales.
-    Ayudamos a las empresas a optimizar su infraestructura tecnológica, fortalecer la seguridad y mejorar la eficiencia operativa.
-    
-    Además, ofrecemos provisión de insumos tecnológicos adaptados a cada necesidad.
-    
-    ¿Buscás soporte IT, liderazgo de equipos, adquisición de equipamiento o gestión integral de proyectos?
-    En Tech Solution te acompañamos con soluciones confiables y eficientes.
-  </p>
-
-  <button class="cta-btn"
-    onclick="window.location.href='mailto:info@techsolution.net.ar?subject=Solicitud%20de%20información&body=Hola%20Raul,%0A%0AMe%20gustaría%20recibir%20más%20información%20sobre%20sus%20servicios.%0A%0AGracias.'">
-    Contactanos
-  </button>
-</section>
-
-<section>
-  <h2>Perfil Profesional</h2>
-
-  <p class="about">
-    Soy Raul Conte, profesional con más de 20 años de experiencia liderando operaciones IT en empresas multinacionales de primer nivel.
-    Especialista en infraestructura, operaciones tecnológicas y gestión de activos IT.
-  </p>
-
-  <button class="linkedin-btn" onclick="window.open('https://www.linkedin.com/in/rconte', '_blank')">
-    Ver perfil en LinkedIn
-  </button>
-</section>
-
-<section>
-  <h2>Servicios</h2>
-
-  <div class="services">
-    <div class="card">
-      <h3>Soporte de Infraestructura IT</h3>
-      <p>Auditoría de tu infraestructura, Administración, gestión remota de tickets, Resolución rápida y eficiente.</p>
-    </div>
-
-    <div class="card">
-      <h3>Consultoría</h3>
-      <p>Manejo de equipos, optimización de procesos, y mejora operativa.</p>
-    </div>
-
-    <div class="card">
-      <h3>Capacitación</h3>
-      <p>Webinars y entrenamiento a usuarios, mentoría a analistas IT.</p>
-    </div>
-
-    <div class="card">
-      <h3>Venta de Tecnología</h3>
-      <p>Licencias, hardware, insumos y entrega rápida con prioridad.</p>
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <div class="badge-dot"></div>
+        Tecnología · Consultoría IT · Innovación
+      </div>
+      <h1>Tu infraestructura<br><em>del futuro,</em><br>hoy.</h1>
+      <p class="hero-sub">Brindamos servicios profesionales en IT con sólida experiencia en entornos corporativos y multinacionales. Ayudamos a las empresas a optimizar su infraestructura tecnológica, fortalecer la seguridad y mejorar la eficiencia operativa. Además, ofrecemos provisión de insumos tecnológicos adaptados a cada necesidad. ¿Buscás soporte IT, liderazgo de equipos, adquisición de equipamiento o gestión integral de proyectos? En Tech Solution te acompañamos con soluciones confiables y eficientes..</p>
+      <div class="hero-actions">
+        <a href="#servicios" class="btn-primary">Ver servicios</a>
+        <!-- ACTUALIZADO A WHATSAPP -->
+        <a href="https://wa.me/5491176370180?text=Hola,%20me%20gustaría%20hablar%20con%20un%20experto" target="_blank" class="btn-ghost">Hablar con un experto →</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">+320</div>
+          <div class="stat-label">Empresas</div>
+        </div>
+        <div>
+          <div class="stat-num">12+</div>
+          <div class="stat-label">Años de experiencia</div>
+        </div>
+        <div>
+          <div class="stat-num">99%</div>
+          <div class="stat-label">Satisfacción</div>
+        </div>
+        <div>
+          <div class="stat-num">24/7</div>
+          <div class="stat-label">Soporte técnico</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>Redes y Networking<em>✦</em>Cloud Computing<em>✦</em>Ciberseguridad<em>✦</em>Hardware Enterprise<em>✦</em>Consultoría IT<em>✦</em>Soporte 24/7<em>✦</em>Data Centers<em>✦</em>Virtualización<em>✦</em>Servidores<em>✦</em>Transformación Digital</span>
+    <span>Redes y Networking<em>✦</em>Cloud Computing<em>✦</em>Ciberseguridad<em>✦</em>Hardware Enterprise<em>✦</em>Consultoría IT<em>✦</em>Soporte 24/7<em>✦</em>Data Centers<em>✦</em>Virtualización<em>✦</em>Servidores<em>✦</em>Transformación Digital</span>
+  </div>
+</div>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="wrap">
+    <div class="section-eyebrow">Servicios</div>
+    <h2>Todo lo que tu empresa<br><em>necesita en tecnología</em></h2>
+    <p class="section-sub">Ofrecemos un ecosistema completo de servicios IT para que puedas enfocarte en crecer tu negocio.</p>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="service-icon">☁️</div>
+        <h3>Cloud & Virtualización</h3>
+        <p>Migración, arquitectura y optimización en AWS, Azure y Google Cloud. Reducí costos y escalá sin límites.</p>
+        <a href="https://wa.me/5491176370180?text=Hola,%20quiero%20más%20info%20sobre%20Cloud" target="_blank" class="service-arrow">Ver más →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🛡️</div>
+        <h3>Ciberseguridad</h3>
+        <p>Auditorías, firewalls de próxima generación, respuesta a incidentes y formación de equipos en seguridad digital.</p>
+        <a href="https://wa.me/5491176370180?text=Hola,%20quiero%20más%20info%20sobre%20Ciberseguridad" target="_blank" class="service-arrow">Ver más →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔗</div>
+        <h3>Software & Hardware</h3>
+        <p>venta de Software como licencias, aplicaciones, setup, configuración, Hardware, Diseño, implementación y mantenimiento.</p>
+        <a href="https://wa.me/5491176370180?text=Hola,%20quiero%20más%20info%20sobre%20Redes" target="_blank" class="service-arrow">Ver más →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🖥️</div>
+        <h3>Venta de insumos, tecnología para tu empresa</h3>
+        <p>Cualquier item que precises, te asesoramos, cotizamos en el día, acordamos avanzar en la compra y te lo llevamos a tu oficina</p>
+        <a href="https://wa.me/5491176370180?text=Hola,%20quiero%20más%20info%20sobre%20Servidores" target="_blank" class="service-arrow">Ver más →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🤝</div>
+        <h3>Consultoría Estratégica IT</h3>
+        <p>Roadmap tecnológico, gestión de proyectos bajo ITIL/PMBOK y alineación de TI con los objetivos del negocio.</p>
+        <a href="https://wa.me/5491176370180?text=Hola,%20quiero%20más%20info%20sobre%20Consultoría" target="_blank" class="service-arrow">Ver más →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🛠️</div>
+        <h3>Soporte & Mesa de Ayuda</h3>
+        <p>Liderazgo de la mesa de ayuda, stock, analistas, usuarios, asesoramiento, administración,  monitoreo proactivo de infraestructura y gestión de tickets con SLA garantizado.</p>
+        <a href="https://wa.me/5491176370180?text=Hola,%20quiero%20más%20info%20sobre%20Soporte" target="_blank" class="service-arrow">Ver más →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTOS -->
+<section id="productos" style="padding-top:0">
+  <div class="wrap">
+    <div class="products-header reveal">
+      <div>
+        <div class="section-eyebrow">Productos</div>
+        <h2>Hardware &<br><em>Software Enterprise</em></h2>
+      </div>
+      <a href="https://wa.me/5491176370180?text=Hola,%20quiero%20ver%20el%20catálogo%20completo" target="_blank" class="btn-ghost">Ver catálogo completo →</a>
+    </div>
+    <div class="products-grid">
+      <div class="product-card reveal">
+        <div class="product-img" style="--grad: linear-gradient(135deg, #00e5ff, #0044ff)">
+          <div class="product-img-bg"></div>
+          <div class="product-img-grid"></div>
+          🖧
+        </div>
+        <div class="product-body">
+          <div class="product-category">Networking</div>
+          <div class="product-name">Switch Cisco Catalyst 9300</div>
+          <div class="product-desc">Switch empresarial 48 puertos PoE+, stacking, con licencia DNA Advantage.</div>
+          <div class="product-footer">
+            <div class="product-price">Consultar <span>precio</span></div>
+            <a href="https://wa.me/5491176370180?text=Hola,%20quiero%20cotizar%20el%20Switch%20Cisco%20Catalyst%209300" target="_blank" class="btn-buy">Cotizar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" style="transition-delay:.08s">
+        <div class="product-img" style="--grad: linear-gradient(135deg, #7b5cfa, #ff3c6e)">
+          <div class="product-img-bg"></div>
+          <div class="product-img-grid"></div>
+          🖥️
+        </div>
+        <div class="product-body">
+          <div class="product-category">Servidores</div>
+          <div class="product-name">HPE ProLiant DL380 Gen10</div>
+          <div class="product-desc">Servidor 2U, Xeon Gold, 32GB RAM ECC, RAID configurado y garantía 3 años.</div>
+          <div class="product-footer">
+            <div class="product-price">Consultar <span>precio</span></div>
+            <a href="https://wa.me/5491176370180?text=Hola,%20quiero%20cotizar%20el%20HPE%20ProLiant%20DL380" target="_blank" class="btn-buy">Cotizar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" style="transition-delay:.16s">
+        <div class="product-img" style="--grad: linear-gradient(135deg, #00e5a0, #00b4ff)">
+          <div class="product-img-bg"></div>
+          <div class="product-img-grid"></div>
+          🔒
+        </div>
+        <div class="product-body">
+          <div class="product-category">Seguridad</div>
+          <div class="product-name">Fortinet FortiGate 60F</div>
+          <div class="product-desc">NGFW con inspección SSL, IPS, sandboxing en la nube y gestión centralizada.</div>
+          <div class="product-footer">
+            <div class="product-price">Consultar <span>precio</span></div>
+            <a href="https://wa.me/5491176370180?text=Hola,%20quiero%20cotizar%20el%20Fortinet%20FortiGate" target="_blank" class="btn-buy">Cotizar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" style="transition-delay:.24s">
+        <div class="product-img" style="--grad: linear-gradient(135deg, #ffb347, #ff3c6e)">
+          <div class="product-img-bg"></div>
+          <div class="product-img-grid"></div>
+          ☁️
+        </div>
+        <div class="product-body">
+          <div class="product-category">Cloud</div>
+          <div class="product-name">Microsoft 365 Business</div>
+          <div class="product-desc">Licenciamiento, migración y soporte. Teams, Exchange, SharePoint y OneDrive.</div>
+          <div class="product-footer">
+            <div class="product-price">Desde $6 <span>/ usuario/mes</span></div>
+            <a href="https://wa.me/5491176370180?text=Hola,%20quiero%20cotizar%20Microsoft%20365" target="_blank" class="btn-buy">Cotizar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="nosotros">
+  <div class="wrap">
+    <div class="why-section">
+      <div>
+        <div class="section-eyebrow">¿Por qué nosotros?</div>
+        <h2>Tu aliado<br><em>tecnológico</em><br>de confianza</h2>
+        <p class="section-sub">Soy Raul Conte, profesional con más de 20 años de experiencia liderando operaciones IT en empresas multinacionales de primer nivel.
+    Especialista en infraestructura, operaciones tecnológicas y gestión de activos IT..</p>
+        <div class="why-features reveal">
+          <div class="why-feature">
+            <div class="feature-icon">⚡</div>
+            <div>
+              <div class="feature-title">Implementación ágil</div>
+              <div class="feature-desc">Proyectos entregados en tiempo y forma. Metodología probada que minimiza la disrupción operativa.</div>
+            </div>
+          </div>
+          <div class="why-feature">
+            <div class="feature-icon">🎯</div>
+            <div>
+              <div class="feature-title">Soluciones a medida</div>
+              <div class="feature-desc">No vendemos paquetes genéricos. Analizamos tu negocio y diseñamos la arquitectura perfecta para vos.</div>
+            </div>
+          </div>
+          <div class="why-feature">
+            <div class="feature-icon">🔐</div>
+            <div>
+              <div class="feature-title">Máxima seguridad</div>
+              <div class="feature-desc">Certificados en ciberseguridad y partners de las principales marcas enterprise del mercado.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="why-visual reveal">
+        <div class="why-ring ring1"></div>
+        <div class="why-ring ring2"></div>
+        <div class="why-ring ring3"></div>
+        <div class="why-center">💡</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="clientes">
+  <div class="wrap">
+    <div class="section-eyebrow">Testimonios</div>
+    <h2>Lo que dicen<br><em>nuestros clientes</em></h2>
+    <div class="testimonials-grid">
+      <div class="testimonial reveal">
+        <div class="stars">★★★★★</div>
+        <p class="t-text">Tech Solution transformó completamente nuestra infraestructura. Migramos a la nube en 3 semanas con cero downtime. El equipo es increíblemente profesional.</p>
+        <div class="t-author">
+          <div class="t-avatar">MR</div>
+          <div>
+            <div class="t-name">Marcelo Rodríguez</div>
+            <div class="t-role">CTO · Grupo Comercial Atlántico</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial reveal" style="transition-delay:.1s">
+        <div class="stars">★★★★★</div>
+        <p class="t-text">Implementaron nuestra solución de ciberseguridad y desde entonces no hemos tenido ningún incidente. El soporte 24/7 es una tranquilidad enorme para nuestra operación.</p>
+        <div class="t-author">
+          <div class="t-avatar">VS</div>
+          <div>
+            <div class="t-name">Valeria Solis</div>
+            <div class="t-role">Directora Operativa · Fintech Pro</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<div class="wrap">
+  <section class="cta-section reveal">
+    <h2>¿Listo para dar el siguiente paso?</h2>
+    <p class="section-sub">Hablemos hoy sobre cómo podemos potenciar tu infraestructura IT y llevar tu empresa al siguiente nivel.</p>
+    <div class="hero-actions">
+      <a href="https://wa.me/5491176370180?text=Hola,%20quiero%20comenzar%20un%20proyecto" target="_blank" class="btn-primary">Empezar ahora</a>
+      <a href="https://wa.me/5491176370180?text=Hola,%20necesito%20soporte%20técnico" target="_blank" class="btn-ghost">Soporte 24/7 →</a>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
 <footer>
-  © 2026 Tech Solution - Todos los derechos reservados.
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo">Tech Solution<span>.</span></a>
+        <p>Tu aliado estratégico en tecnología empresarial y transformación digital.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Servicios</h4>
+        <ul>
+          <li><a href="#">Cloud Computing</a></li>
+          <li><a href="#">Ciberseguridad</a></li>
+          <li><a href="#">Networking</a></li>
+          <li><a href="#">Infraestructura</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Compañía</h4>
+        <ul>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#clientes">Clientes</a></li>
+          <li><a href="#">Casos de éxito</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="https://wa.me/5491176370180" target="_blank">+54 9 11 7637-0180</a></li>
+          <li><a href="mailto:info@techsolution.com">info@techsolution.com</a></li>
+          <li><a href="#">Buenos Aires, Argentina</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Tech Solution - Ceo Raul Conte - Todos los derechos reservados.</p>
+      <div class="social-links">
+        <a href="#" class="social-link">In</a>
+        <a href="#" class="social-link">Tw</a>
+        <a href="#" class="social-link">Ig</a>
+      </div>
+    </div>
+  </div>
 </footer>
 
-<a class="instagram" href="https://www.instagram.com/techsolution.argentina/" target="_blank">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
-</a>
+<script>
+  // CURSOR
+  const cursor = document.getElementById('cursor');
+  const cursorRing = document.getElementById('cursor-ring');
+  
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    
+    // Smooth ring
+    cursorRing.animate({
+      left: e.clientX + 'px',
+      top: e.clientY + 'px'
+    }, { duration: 500, fill: "forwards" });
+  });
 
-<a class="whatsapp" href="https://wa.me/5491176370180" target="_blank">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
-</a>
+  // CANVAS BG
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles = [];
+
+  function init() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+    particles = [];
+    for(let i=0; i<40; i++) {
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        s: Math.random() * 2
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = '#00e5ff22';
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      if(p.x < 0) p.x = w; if(p.x > w) p.x = 0;
+      if(p.y < 0) p.y = h; if(p.y > h) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.s, 0, Math.PI*2);
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  
+  window.addEventListener('resize', init);
+  init();
+  draw();
+
+  // REVEAL ON SCROLL
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
