@@ -1,0 +1,65 @@
+/* ───────── ICONOS CONTACTO (CTA FINAL) ───────── */
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.icon-btn {
+  width: 72px;
+  height: 72px;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 229, 255, 0.05);
+  transition: all 0.25s ease;
+  backdrop-filter: blur(6px);
+  text-decoration: none;
+}
+
+.icon-btn svg {
+  width: 34px;
+  height: 34px;
+  transition: transform 0.2s ease;
+}
+
+/* Hover efecto pro */
+.icon-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  border-color: #00e5ff;
+  box-shadow: 0 0 20px rgba(0,229,255,0.4);
+  background: rgba(0,229,255,0.12);
+}
+
+.icon-btn:hover svg {
+  transform: scale(1.15);
+}
+
+/* Colores originales de cada red */
+.icon-btn.linkedin svg path { fill: #0A66C2; }
+.icon-btn.instagram svg path { fill: #E4405F; }
+.icon-btn.email svg path { fill: #0072C6; }
+.icon-btn.whatsapp svg path { fill: #25D366; }
+
+/* ───────── RESPONSIVE ───────── */
+
+@media (max-width: 600px) {
+  .icon-btn {
+    width: 60px;
+    height: 60px;
+  }
+
+  .icon-btn svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .social-icons {
+    gap: 18px;
+  }
+}
